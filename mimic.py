@@ -46,19 +46,14 @@ def create_mimic_dict(filename):
     """
 
     with open(filename) as f:
-        result = {'': 'I'}
+        result = {'': ['I']}
         i = 1
         split_file = f.read().split()
         list_length = len(split_file)
         while i <= list_length:
             for word in split_file:
                 if i == list_length:
-                    if word not in result:
-                        result[word] = ['']
-                        i += 1
-                    else:
-                        result[word].append('')
-                        i += 1
+                    i += 1
                 else:
                     if word not in result:
                         result[word] = [split_file[i]]
@@ -66,10 +61,8 @@ def create_mimic_dict(filename):
                     else:
                         result[word].append(split_file[i])
                         i += 1
-        for k, v in sorted(result.items()):
-            print(k, ':', v)
+        print(json.dumps(result, indent=4))
         return result
-        #print(json.dumps(result, indent=0))
 
 
 def print_mimic(mimic_dict, start_word):
@@ -80,8 +73,13 @@ def print_mimic(mimic_dict, start_word):
         - Randomly select a new word from the next-list
         - Repeat this process 200 times
     """
-    # +++your code here+++
-    pass
+    result = []
+    for _ in range(200):
+        result.append(start_word)
+        next_list = mimic_dict[start_word]
+        new_word_from_list = random.choice(next_list)
+        start_word = new_word_from_list
+    print(' '.join(result))
 
 
 # Provided main(), calls mimic_dict() and print_mimic()
