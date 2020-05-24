@@ -19,10 +19,11 @@ You can try adding in line breaks around 70 columns so the output looks
 better.
 """
 
-__author__ = "???"
+__author__ = "Mike Boring"
 
 import random
 import sys
+import json
 
 
 def create_mimic_dict(filename):
@@ -43,8 +44,32 @@ def create_mimic_dict(filename):
                 "who" : ["knows"]
             }
     """
-    # +++your code here+++
-    pass
+
+    with open(filename) as f:
+        result = {'': 'I'}
+        i = 1
+        split_file = f.read().split()
+        list_length = len(split_file)
+        while i <= list_length:
+            for word in split_file:
+                if i == list_length:
+                    if word not in result:
+                        result[word] = ['']
+                        i += 1
+                    else:
+                        result[word].append('')
+                        i += 1
+                else:
+                    if word not in result:
+                        result[word] = [split_file[i]]
+                        i += 1
+                    else:
+                        result[word].append(split_file[i])
+                        i += 1
+        for k, v in sorted(result.items()):
+            print(k, ':', v)
+        return result
+        #print(json.dumps(result, indent=0))
 
 
 def print_mimic(mimic_dict, start_word):
