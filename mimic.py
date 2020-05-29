@@ -76,6 +76,8 @@ def print_mimic(mimic_dict, start_word):
     result = []
     for _ in range(200):
         result.append(start_word)
+        if start_word not in mimic_dict:
+            start_word = ''
         next_list = mimic_dict[start_word]
         new_word_from_list = random.choice(next_list)
         start_word = new_word_from_list
