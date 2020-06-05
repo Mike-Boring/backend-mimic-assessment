@@ -23,7 +23,6 @@ __author__ = "Mike Boring"
 
 import random
 import sys
-import json
 
 
 def create_mimic_dict(filename):
@@ -47,21 +46,14 @@ def create_mimic_dict(filename):
 
     with open(filename) as f:
         result = {'': ['I']}
-        i = 1
         split_file = f.read().split()
-        list_length = len(split_file)
-        while i <= list_length:
-            for word in split_file:
-                if i == list_length:
-                    i += 1
-                else:
-                    if word not in result:
-                        result[word] = [split_file[i]]
-                        i += 1
-                    else:
-                        result[word].append(split_file[i])
-                        i += 1
-        print(json.dumps(result, indent=4))
+        for i, word in enumerate(split_file, 1):
+            if i == len(split_file):
+                continue
+            if word not in result:
+                result[word] = [split_file[i]]
+            else:
+                result[word].append(split_file[i])
         return result
 
 
